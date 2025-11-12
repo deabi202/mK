@@ -7,7 +7,6 @@
   <link rel="icon" type="image/png" href="favicon.png">
 
   <style>
-    /* === GLOBAL === */
     * { box-sizing: border-box; transition: all 0.3s ease; }
     body {
       margin: 0;
@@ -21,20 +20,17 @@
       overflow-x: hidden;
     }
 
-    /* === DARK / LIGHT MODE === */
     body.light {
       color: #222;
-      background: linear-gradient(270deg, #e3f2fd, #f8f9fa, #e3f2fd);
+      background: linear-gradient(270deg, #f8f9fa, #e3f2fd, #f8f9fa);
     }
 
-    /* === BACKGROUND EFFECT (subtle moving gradient) === */
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* === OVERLAY for blur layer === */
     .overlay {
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(8px);
@@ -43,9 +39,8 @@
       z-index: -1;
     }
 
-    /* === CONTENT BOX === */
     .content {
-      margin-top: 12%;
+      margin-top: 10%;
       background: rgba(255, 255, 255, 0.07);
       border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 24px;
@@ -71,7 +66,34 @@
       text-shadow: 0 0 10px #9fd8ff;
     }
 
-    /* === TOGGLE THEME BUTTON === */
+    /* === PLAY BUTTON === */
+    .play-btn {
+      margin-top: 30px;
+      padding: 14px 40px;
+      font-size: 20px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #00bcd4, #2196f3, #673ab7);
+      background-size: 200%;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      letter-spacing: 1px;
+      animation: gradientShift 4s ease infinite;
+      box-shadow: 0 0 20px rgba(0, 188, 212, 0.5);
+      transition: transform 0.2s ease;
+    }
+    .play-btn:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 30px rgba(0, 188, 212, 0.7);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     #themeToggle {
       position: fixed;
       top: 20px;
@@ -95,7 +117,6 @@
       background: rgba(255,255,255,0.3);
     }
 
-    /* === MICRO ANIMATIONS === */
     h1:hover {
       text-shadow: 0 0 20px #00ffff;
       transform: scale(1.05);
@@ -110,7 +131,7 @@
       text-shadow: 0 0 10px #00e0ff;
     }
 
-    /* === INTRO LOADER === */
+    /* INTRO LOADER */
     #loader {
       position: fixed;
       inset: 0;
@@ -142,6 +163,9 @@
     <p>Salom! Siz <strong>mK</strong> Telegram kanaliga tashrif buyurdingiz. Bu yerda yangiliklar, maslahatlar va qiziqarli postlar bilan bo‘lishamiz.</p>
     <p>📌 Kanalga qo‘shilish: <a href="https://t.me/mK" target="_blank">t.me/mK</a></p>
     <p>🌐 Veb shaklda postlar: <a href="https://t.me/s/mK" target="_blank">t.me/s/mK</a></p>
+
+    <button class="play-btn" id="playBtn">▶️ Play AKAI</button>
+    <audio id="player" preload="auto" src="akai.mp3"></audio>
   </div>
 
   <footer>
@@ -159,6 +183,20 @@
     const themeBtn = document.getElementById("themeToggle");
     themeBtn.addEventListener("click", () => {
       document.body.classList.toggle("light");
+    });
+
+    // PLAY MUSIC
+    const player = document.getElementById("player");
+    const btn = document.getElementById("playBtn");
+
+    btn.addEventListener("click", () => {
+      player.play().then(() => {
+        btn.textContent = "🎵 Playing AKAI...";
+        btn.disabled = true;
+        btn.style.opacity = "0.8";
+      }).catch(err => {
+        alert("Brauzer audio ijrosini bloklagan bo‘lishi mumkin. Sahifani yangilab ko‘ring.");
+      });
     });
   </script>
 </body>
