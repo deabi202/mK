@@ -7,115 +7,159 @@
   <link rel="icon" type="image/png" href="favicon.png">
 
   <style>
-    /* Umumiy sahifa uslubi */
+    /* === GLOBAL === */
+    * { box-sizing: border-box; transition: all 0.3s ease; }
     body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', Arial, sans-serif;
       color: white;
       text-align: center;
-      background: url('car_4k_compressed.jpg') no-repeat center center fixed;
-      background-size: cover;
-      filter: brightness(1.3);
+      background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+      background-size: 600% 600%;
+      animation: gradientMove 20s ease infinite;
       overflow-x: hidden;
     }
 
-    /* Shaffof qora tuman (blur) qatlami */
+    /* === DARK / LIGHT MODE === */
+    body.light {
+      color: #222;
+      background: linear-gradient(270deg, #e3f2fd, #f8f9fa, #e3f2fd);
+    }
+
+    /* === BACKGROUND EFFECT (subtle moving gradient) === */
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* === OVERLAY for blur layer === */
     .overlay {
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       z-index: -1;
     }
 
-    /* Asosiy kontent qutisi */
+    /* === CONTENT BOX === */
     .content {
       margin-top: 12%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 24px;
       padding: 50px 40px;
       display: inline-block;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 30px rgba(0,0,0,0.4);
-      animation: fadeIn 1.5s ease-out;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      animation: fadeIn 1.5s ease-out forwards;
+      opacity: 0;
     }
 
-    /* Sarlavha kirish animatsiyasi */
-    h1 {
-      animation: fadeInDown 1.5s ease-out;
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Matn va linklar */
     a {
       color: #8ecbff;
       text-decoration: none;
-      transition: 0.3s;
     }
     a:hover {
       color: #b5e3ff;
-      text-shadow: 0 0 8px #9fd8ff;
+      text-shadow: 0 0 10px #9fd8ff;
+    }
+
+    /* === TOGGLE THEME BUTTON === */
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      font-weight: bold;
+    }
+    body.light #themeToggle {
+      color: #222;
+      background: rgba(0,0,0,0.05);
+      border-color: rgba(0,0,0,0.2);
+    }
+    #themeToggle:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* === MICRO ANIMATIONS === */
+    h1:hover {
+      text-shadow: 0 0 20px #00ffff;
+      transform: scale(1.05);
     }
 
     footer {
-      margin-top: 50px;
+      margin-top: 60px;
       color: rgba(255,255,255,0.7);
-      animation: fadeIn 2s ease-out;
     }
 
-    /* Tugma (gradient uslubi) */
-    .gradient-btn {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 12px 30px;
-      font-size: 18px;
-      border: none;
-      border-radius: 30px;
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
+    footer:hover {
+      text-shadow: 0 0 10px #00e0ff;
+    }
+
+    /* === INTRO LOADER === */
+    #loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: black;
       color: white;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 0 15px rgba(37,117,252,0.5);
+      font-size: 60px;
+      letter-spacing: 4px;
+      font-weight: bold;
+      z-index: 9999;
+      transition: 1s;
     }
-    .gradient-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 25px rgba(37,117,252,0.8);
-      background: linear-gradient(45deg, #2575fc, #6a11cb);
-    }
-
-    /* Kirish effekti (fadeIn) */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    #loader.fade-out {
+      opacity: 0;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
+  <div id="loader">mK</div>
   <div class="overlay"></div>
+
+  <button id="themeToggle">🌙 Dark / ☀️ Light</button>
 
   <div class="content">
     <h1>mK – Telegram kanali</h1>
     <p>Salom! Siz <strong>mK</strong> Telegram kanaliga tashrif buyurdingiz. Bu yerda yangiliklar, maslahatlar va qiziqarli postlar bilan bo‘lishamiz.</p>
     <p>📌 Kanalga qo‘shilish: <a href="https://t.me/mK" target="_blank">t.me/mK</a></p>
     <p>🌐 Veb shaklda postlar: <a href="https://t.me/s/mK" target="_blank">t.me/s/mK</a></p>
-
-    <button class="gradient-btn" onclick="window.open('https://t.me/mK', '_blank')">
-      🔗 Kanalga o'tish
-    </button>
   </div>
 
   <footer>
-    <p>&copy; 2032 mK Telegram kanal. All huquqlar himoyalangan.</p>
+    <p>&copy; 2032 mK Telegram kanal. Barcha huquqlar himoyalangan.</p>
   </footer>
+
+  <script>
+    // INTRO LOADER
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      loader.classList.add("fade-out");
+    });
+
+    // THEME TOGGLE
+    const themeBtn = document.getElementById("themeToggle");
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+    });
+  </script>
 </body>
 </html>
