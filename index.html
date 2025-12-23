@@ -14,21 +14,18 @@
       font-family: Arial, sans-serif;
       overflow: hidden;
       text-align: center;
+      background: black;
     }
 
-    /* ====== INTRO (2 sekund) ====== */
+    /* ===== INTRO (2 sekund) ===== */
     #intro {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: black;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 3.5em;
-      color: white;
       font-weight: bold;
       z-index: 50;
       animation: fadeOut 2s ease forwards;
@@ -36,115 +33,147 @@
     }
 
     @keyframes fadeOut {
-      0% { opacity: 1; }
-      100% { opacity: 0; visibility: hidden; }
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
 
-    /* ====== ORQA FON VIDEO ====== */
+    /* ===== VIDEO BACKGROUND ===== */
     #bgVideo {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       z-index: -2;
+      filter: brightness(1.2) contrast(1.05);
     }
 
-    /* Qora shaffof qatlam */
+    /* YENGIL QORA QATLAM */
     .overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(3px);
+      inset: 0;
+      background: rgba(0,0,0,0.18);
+      backdrop-filter: blur(1.5px);
       z-index: -1;
     }
 
-    /* ====== ASOSIY KONTENT ====== */
+    /* ===== CONTENT ===== */
     .content {
       margin-top: 10%;
-      background: rgba(255,255,255,0.05);
+      background: rgba(0,0,0,0.45);
       padding: 40px;
       border-radius: 20px;
       display: inline-block;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 25px rgba(0,0,0,0.4);
-      animation: show 1.5s ease;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+      animation: show 1.4s ease;
     }
 
     @keyframes show {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    h1::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #00d4ff, #006eff);
+      border-radius: 3px;
     }
 
     /* PLAY BUTTON */
     .play-btn {
-      margin-top: 20px;
-      padding: 12px 30px;
+      margin-top: 25px;
+      padding: 14px 36px;
       font-size: 20px;
-      border-radius: 12px;
-      border: 2px solid rgba(255,255,255,0.6);
-      background: rgba(255,255,255,0.1);
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(90deg, #007bff, #00c3ff);
       color: white;
       cursor: pointer;
       transition: 0.3s;
+      box-shadow: 0 0 18px rgba(0,170,255,0.6);
     }
 
     .play-btn:hover {
-      transform: scale(1.05);
-      background: rgba(255,255,255,0.25);
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(0,200,255,0.9);
     }
 
-    a { color: #aad; }
+    a {
+      color: #8ecbff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-shadow: 0 0 10px #9fd8ff;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- INTRO (2 sekund) -->
+  <!-- INTRO -->
   <div id="intro">mK</div>
 
-  <!-- VIDEO BACKGROUND -->
+  <!-- VIDEO -->
   <video id="bgVideo" autoplay muted loop playsinline>
-      <source src="bg.mp4" type="video/mp4">
+    <source src="bg.mp4" type="video/mp4">
   </video>
 
   <div class="overlay"></div>
 
+  <!-- CONTENT -->
   <div class="content">
     <h1>mK – Telegram kanali</h1>
-    <p>Salom! Bu yerda qo‘shiqlar, maslahatlar va qiziqarli postlar joylashgan 🎧</p>
 
-    <p>📌 Kanalga qo‘shilish:  
+    <p>Salom! Bu yerda qo‘shiqlar, maslahatlar va qiziqarli postlar 🎧</p>
+
+    <p>📌 Kanal:
       <a href="https://t.me/deabi202" target="_blank">t.me/deabi202</a>
     </p>
 
-    <p>🌐 Postlar:  
+    <p>🌐 Postlar:
       <a href="https://t.me/s/deabi202" target="_blank">t.me/s/deabi202</a>
     </p>
 
     <button class="play-btn" id="playBtn">▶️ Play AKAI</button>
-    <audio id="player" preload="auto" src="akai.mp3"></audio>
+    <audio id="player" src="akai.mp3" preload="auto"></audio>
   </div>
 
-  <!-- Audio Play Script -->
+  <!-- AUDIO SCRIPT -->
   <script>
     const player = document.getElementById("player");
     const btn = document.getElementById("playBtn");
 
     btn.addEventListener("click", () => {
       player.play().then(() => {
-        btn.textContent = "🎵 Playing AKAI...";
+        btn.textContent = "🎵 AKAI chalinyapti...";
         btn.disabled = true;
-        btn.style.opacity = "0.7";
+        btn.style.opacity = "0.75";
       }).catch(() => {
-        alert("Brauzer audio ijrosini blokladi. Page-ni qayta oching.");
+        alert("Brauzer audio autoplayni bloklagan. Play-ni yana bosing.");
       });
     });
   </script>
 
 </body>
-</html> 
+</html>
